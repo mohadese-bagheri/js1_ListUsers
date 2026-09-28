@@ -1,12 +1,16 @@
 
 
 // نمایش لیست کاربرها
-function LoadUser() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-        .then(res => res.json())
-        .then(data => {
+async function LoadUser() {
+    try{
+        const res= await fetch('https://jsonplaceholder.typicode.com/users');
+        if (!res.ok) throw new error(`خطا در واکشی کاربران : ${res.status}`);
+        
+        const data = await res.json();
+        
+
+
             document.getElementById("table").style.opacity = "1";
-            const tbody = document.getElementById("tbody");
             tbody.innerHTML = " ";
 
             data.forEach(user => {
@@ -21,10 +25,10 @@ function LoadUser() {
                 <button onclick="EditUser(${user.id}, '${user.name}', '${user.email}')" > ویرایش </button></td>
                 </tr>`;
 
-                console.log(user);
-
             });
-        });
+    } catch (error){                 پ
+        alert("خطا در بارگزاری کاربران:" + error.message  );
+    }
 }
 
 
